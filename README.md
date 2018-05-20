@@ -1,12 +1,12 @@
 # JJ-Capstone-Project
 
-During this capstone project, we mainly build a recommandation system using machine learning algorithem and an interactive interface to help J&J employees to find most useful information quickly. 
+During this capstone project, we mainly build a recommendation system using machine learning algorithms and an interactive interface to help J&J employees to find most useful information quickly. 
 
-## Part I : Interface 
+## Part I: Interface 
 
 The interface mainly consists of there parts - Landing Page, Modeling Page and Interface Page. 
 
-- Technology : Python Flask, CSS, Javascript
+- Technology: Python Flask, CSS, Javascript
 
 ### 1. Landing Page
 
@@ -22,18 +22,18 @@ The final menu to guide users looks like this :
 
 ### 2. Modeling Page
 
-Modeling Page provides the final production  recommandation using backend machine learning algorithem.
+Modeling Page provides the final production recommendation using backend machine learning algorithms.
 
 ![](./images/recommandation.png)
 
 
 ### 3. Interface Page
 
-Interface Page mainly provide quick search function according to J&J's request.
+Interface Page mainly provides quick search function according to J&J's request.
 
 ![](./images/interface.png)
 
-## Part II : Model Building 
+## Part II: Model Building 
 
 ### 1. Data Exploration
 
@@ -45,13 +45,13 @@ Then, we try to find some patterns within the data.
 
 ![](./images/features.png)
 
-To test our hypothese, we check the data distribution and useful features for model building.
+To test our hypothesis, we check the data distribution and useful features for model building.
 
 ![](./images/product.png)
 
-### 2. Techniches
+### 2. Techniques
 
-To better create features, we use the word embedding technology to transfrom text into numeric values.
+To better create features, we use the word embedding technology to transform text into numeric values.
 
 ![](./images/wordEmb.png)
 
@@ -65,7 +65,7 @@ Below is the final matrix that we use to compare different model performances.
 
 ### 3. Main Text Framework
  
-Genearlly speaking, for feature engineering, RNN has been used to deal with descriptions about product. We use this way for feature engineering. After this stage, we combine all data together and use boosting tree to build final model.
+Generally speaking, for feature engineering, RNN has been used to deal with descriptions about the product. We use this way for feature engineering. After this stage, we combine all data together and use boosting tree to build final model.
 
 - Tools: RNN with GRU and XGboost 
 - Problems: Overfitting 
