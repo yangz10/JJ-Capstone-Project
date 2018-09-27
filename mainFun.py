@@ -32,7 +32,7 @@ class unspsc():
                  PrhdaPath= rootPath + 'defaultInput/csvFiles/Prhda.csv',
                  GmdnPath = rootPath + 'defaultInput/csvFiles/GMDN_desp.csv',
                  embedPath = rootPath + 'defaultInput/wordEmbeddingMartix/crawl-300d-2M.vec',
-                 weightsPath = rootPath + 'defaultInput/preTrainedWordEmbed/',
+                 weightsPath = rootPath + 'defaultInput/preTrainedWeights/',
                  wordEmPath = rootPath + 'defaultInput/wordEmbeddingMartix/'):
 
         self.SapPath,self.PrhdaPath  = SapPath, PrhdaPath
@@ -53,6 +53,7 @@ class unspsc():
                    'Material','Ean11','Gmdnptdefinition','Gmdnptname','Unspsc','Prdha']
 
         filterData,filterPRDHA = rawData[columns],rawPRDHA[['Prdha','Minor_name','Major_name']]
+        # 93 - UNSPSC  73 - UNSPSC
         filterData = filterData.dropna().reset_index(drop=True)
         filterPRDHA['Prdha'] = filterPRDHA['Prdha'].astype('O')
 
@@ -208,9 +209,8 @@ class unspsc():
         X_tra, X_val, y_tra, y_val = train_test_split(x_test, y_train[0], train_size=0.8, random_state=125)
         hist = model.fit(X_tra, y_tra, batch_size=batch_size, epochs=epochs,
                          validation_data=(X_val, y_val), verbose=1)
-        newPath = self.weightsPath + 'New_' + Filed
+        newPath = self.weightsPath + 'New_' + Filed + '.h5'
         model.save_weights(newPath)
-        model.pop()
         model.pop()
         pred = model.predict(x_test, batch_size=512, verbose=1) # if need to change
         return pred
@@ -234,6 +234,7 @@ class unspsc():
         embedding_matrix = unspsc.wordEmbedding(self,tokenizer=tokenizer, max_features=max_features,
                                                 Filed=Filed,embed_size=300, PreTrained=True)
         embed_size =300
+
         model = Sequential()
         embed = Embedding(embedding_matrix.shape[0], embed_size, weights=[embedding_matrix])
         model.add(embed)
@@ -251,6 +252,7 @@ class unspsc():
         model.compile(loss='sparse_categorical_crossentropy',
                       optimizer='adam',
                       metrics=['accuracy'])
+
         if Summary:
             model.summary()
 
@@ -324,7 +326,7 @@ class unspsc():
             watchlist = [(xg_train, 'train'), (xg_test, 'test')]
             num_round = num_round
             bst = xgb.train(param, xg_train, num_round, watchlist)
-        # bst.save_model('xgboost.model')
+            bst.save_model('new_xgboost.model')
         # get prediction
         if InputTest :
             data = np.matrix(featuresReady)
@@ -359,6 +361,7 @@ if __name__ == "__main__":
     print('Demo')
     # model = unspsc()
     # filterAll, y_train = model.dataPre()
+
     # gmdn_output, material_output, prdha_output = model.stagingFeature(filterAll,y_train,Pre_trained=True,Summary=False,epochs=20)
     # featuresReady = model.FeatureMerge(gmdn_output,material_output,prdha_output,filterAll)
     # finalPrediction = model.finalPrediction(featuresReady, y_train, num_round=50)
